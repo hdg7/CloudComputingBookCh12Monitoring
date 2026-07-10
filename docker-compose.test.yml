@@ -1,0 +1,49 @@
+services:
+  database-tests:
+      build: ./database
+      environment:
+       - REDIS_URL=redis://redis:6379
+      volumes:
+       - ./data:/app/data
+      command: ["bash", "test.bash"]
+      networks:
+       - backend
+
+  uploader-tests:
+      build: ./uploader_service
+      environment:
+       - REDIS_URL=redis://redis:6379
+      command: ["bash", "test.bash"]
+      networks:
+       - backend
+
+  system-tests:
+    build: ./uploader_service
+    depends_on:
+      uploader:
+        condition: service_healthy
+      database:
+        condition: service_healthy       
+      worker:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    command: ["bash", "systemtest.bash"]
+    networks:
+      - backend
+
+  worker-tests:
+      build: ./yolo_worker
+      environment:
+       - REDIS_URL=redis://redis:6379
+      volumes:
+       - ./data:/app/data
+      command: ["bash", "test.bash"]
+      networks:
+       - backend
+
+networks:
+  backend:
+    driver: bridge
