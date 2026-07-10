@@ -1,3 +1,9 @@
+# Chapter 12 Monitoring
+
+This repository contains the Monitoring tutorial mentioned in **Chapter 12** of the book:
+
+[**Cloud Computing for Artificial Intelligence: Concepts, Methods, and Practical Tools**](https://amzn.eu/d/02lMPIKf)
+
 # Object Detection Pipeline with Prometheus & Grafana Monitoring
 
 ## Overview
